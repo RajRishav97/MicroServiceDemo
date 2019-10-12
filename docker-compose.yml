@@ -1,0 +1,91 @@
+version: '3.1'
+services:
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    network_mode: host
+    volumes:
+      - $HOME/mongo:/data/db/
+   
+  eureka: 
+    image: eureka-image
+    build: movie-app/eureka-server/
+    network_mode: host
+    hostname: localhost
+    container_name: eureka-demo
+    ports:
+      - 8761:8761
+
+  mysql:
+    image: mysql:latest
+    ports:
+     - "3306:3306"
+    container_name: mysql-docker
+    network_mode: host
+    hostname: localhost
+    volumes:
+      - $HOME/mysql:/var/lib/mysql
+    environment:
+      MYSQL_USER: root 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo
+      MYSQL_PASSWORD: root
+
+  spring-user: 
+    image: user-image
+    build: movie-app/user/
+    restart: always
+    hostname: localhost
+    network_mode: host
+    container_name: user-app
+    depends_on:
+           - mysql
+           - eureka
+           - spring-config-server
+    ports: 
+          - 8082:8082
+
+  spring-movie: 
+    image: movie-image
+    build: movie-app/movie/
+    restart: always
+    network_mode: host
+    hostname: localhost
+    container_name: movie-demo
+    depends_on:
+           - mongo
+           - eureka
+           - spring-config-server
+    ports: 
+          - 8098:8098
+
+
+  spring-config-server: 
+    image: config-image
+    build: movie-app/spring-config-server/
+    restart: always
+    network_mode: host
+    hostname: localhost
+    container_name: config-server-demo
+    depends_on:
+           - eureka
+    ports: 
+          - 8088:8088
+
+  spring-api-gateway: 
+    image: api-gateway-image
+    build: movie-app/api-service/
+    restart: always
+    network_mode: host
+    hostname: localhost
+    container_name: api-service-demo
+    depends_on:
+           - eureka
+           - spring-movie
+           - spring-user
+    ports: 
+          - 8010:8010
