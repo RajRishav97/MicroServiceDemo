@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/v1")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     UserServices userServices;
 
@@ -26,10 +27,10 @@ public class UserController {
         ResponseEntity responseEntity;
         try{
             userServices.saveUser(user);
-            responseEntity=new ResponseEntity<String>("successfully created", HttpStatus.CREATED);
+            responseEntity=new ResponseEntity("successfully created", HttpStatus.CREATED);
         }
         catch (UserAlreadyExistException e){
-            responseEntity=new ResponseEntity<String>(e.getMessage(),HttpStatus.CONFLICT);
+            responseEntity=new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
         return responseEntity;
     }

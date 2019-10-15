@@ -9,26 +9,22 @@ public class User {
     private int id;
     private String firstName;
     private String lastName;
+    private String userName;
     private int age;
+    private String password;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                '}';
-    }
     public User(){
 
     }
-    public User(int id, String firstName, String lastName, int age) {
+    public User(int id, String firstName, String lastName, String userName, int age, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userName = userName;
         this.age = age;
+        this.password = password;
     }
+
 
     public int getId() {
         return id;
@@ -60,5 +56,21 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

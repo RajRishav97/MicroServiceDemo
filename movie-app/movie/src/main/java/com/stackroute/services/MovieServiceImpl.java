@@ -66,7 +66,9 @@ public class MovieServiceImpl implements MovieService {
             movie1.setCatagory(movie.getCatagory());
             movie1.setCollection(movie.getCollection());
             movie1.setLanguage(movie.getLanguage());
-            movie1.setMovieName(movie.getMovieName());
+            movie1.setTitle(movie.getTitle());
+            movie1.setPoster_path(movie.getPoster_path());
+            movie1.setComments(movie.getComments());
             movieRepository.save(movie1);
             return movie1;
         } else {

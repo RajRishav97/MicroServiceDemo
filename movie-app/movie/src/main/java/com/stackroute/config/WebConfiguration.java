@@ -1,3 +1,4 @@
+/*
 package com.stackroute.config;
 
 import com.stackroute.domain.Movie;
@@ -21,3 +22,4 @@ public class WebConfiguration {
         };
     }
 }
+*/

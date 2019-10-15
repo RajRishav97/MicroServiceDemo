@@ -15,6 +15,7 @@ import java.util.Optional;
 @RefreshScope
 @RestController
 @RequestMapping(value = "api/v1")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MovieController {
     private MovieService movieService;
 
@@ -67,10 +68,10 @@ public class MovieController {
     public ResponseEntity<?> updateMovieWithId(@RequestBody Movie movie) {
         ResponseEntity responseEntity;
         try {
-            responseEntity = new ResponseEntity<Movie>(movieService.getMovieWithId(movie.getId()).get(), HttpStatus.OK);
+            responseEntity = new ResponseEntity<Movie>(movieService.updateMovie(movie), HttpStatus.OK);
             movieService.updateMovie(movie);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity(e.getMessage(), HttpStatus.CONFLICT);
         }
         return responseEntity;
     }
